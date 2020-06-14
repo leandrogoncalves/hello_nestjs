@@ -4,7 +4,7 @@ import User from "src/db/models/user.entity";
 import UserInput from "./input/user.input";
 
 @Resolver()
-export default class userResolver {
+export default class UserResolver {
   constructor(private readonly repoService: RepoService) {}
 
   @Query(() => [User])
