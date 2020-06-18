@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Column,
-  OneToMany,
   JoinColumn,
   ManyToOne,
 } from "typeorm";
@@ -17,6 +16,10 @@ export default class Message {
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Field()
+  @Column()
+  content: string;
 
   @Field()
   @Column({ name: "user_id" })
@@ -37,7 +40,7 @@ export default class Message {
 
   @ManyToOne(() => User, (user) => user.messageConnection, { primary: true })
 
-  @JoinColumn({ name: "User_id" })
+  @JoinColumn({ name: "user_id" })
   userConnection: Promise<User>;
 
 }

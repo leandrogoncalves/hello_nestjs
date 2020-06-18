@@ -18,6 +18,10 @@ export default class User {
 
   @Field()
   @Column()
+  email: string;
+
+  @Field()
+  @Column()
   name: string;
 
   @Field()

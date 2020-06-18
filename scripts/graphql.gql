@@ -1,0 +1,38 @@
+mutation {
+  createUser(data: {
+    name: "Leandro"
+    email: "contato.leandrogoncalves@gmail.com"
+  }) {
+    id
+    email
+    createdAt
+    updatedAt
+  }
+}
+
+query {
+  getUsers {
+    id
+    email
+    createdAt
+    updatedAt
+  }
+}
+
+query {
+  getMessageFromUser(userId: 1){
+    id
+  }
+}
+
+mutation {
+  createMessage(data:{
+    userId:1,
+    content: "teste"
+  }) {
+    id
+    content
+    createdAt
+    updatedAt
+  }
+}

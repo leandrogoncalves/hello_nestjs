@@ -1,9 +1,17 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Mutation,
+  Query,
+  Resolver,
+  Parent,
+  ResolveField,
+} from "@nestjs/graphql";
 import RepoService from "src/repo.service";
 import Message from "src/db/models/message.entity";
+import User from "src/db/models/user.entity";
 import MessageInput from "./input/message.input";
 
-@Resolver()
+@Resolver(() => Message)
 export default class MessageResolver {
   constructor(private readonly repoService: RepoService) {}
 
@@ -12,24 +20,33 @@ export default class MessageResolver {
     return this.repoService.messageRepo.find();
   }
 
-  @Query(() => Message, { nullable: true })
+  @Query(() => [Message])
   public async getMessageFromUser(
     @Args("userId") userId: number
-  ): Promise<Message> {
-    return this.repoService.messageRepo.findOne({
-      where: {
-        userId,
-      },
+  ): Promise<Message[]> {
+    return this.repoService.messageRepo.find({
+      where: { userId },
     });
+  }
+
+  @Query(() => Message, { nullable: true })
+  public async getMessage(@Args("id") id: number): Promise<Message> {
+    return this.repoService.messageRepo.findOne(id);
   }
 
   @Mutation(() => Message)
   public async createMessage(
-    @Args("data") input: MessageInput
+    @Args('data') input: MessageInput
   ): Promise<Message> {
-    const Message = this.repoService.messageRepo.create({
+    const message = this.repoService.messageRepo.create({
       content: input.content,
+      userId: input.userId,
     });
-    return this.repoService.messageRepo.save(Message);
+    return this.repoService.messageRepo.save(message);
+  }
+
+  @ResolveField(() => User)
+  public async getUser(@Parent() parent: Message): Promise<User> {
+    return this.repoService.userRepo.findOne(parent.userId);
   }
 }

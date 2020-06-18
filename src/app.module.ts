@@ -5,10 +5,12 @@ import { AppService } from "./app.service";
 import { GraphQLModule } from "@nestjs/graphql";
 import * as ormOptions from "./config/orm";
 import RepoModule from "./repo.module";
-import userResolver from "./resolvers/user.resolver";
+import UserResolver from "./resolvers/user.resolver";
+import MessageResolver from "./resolvers/message.resolver";
 
 const gqlImports = [
-  userResolver,
+  UserResolver,
+  MessageResolver
 ];
 
 @Module({

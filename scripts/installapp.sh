@@ -13,7 +13,8 @@ mkdir -p data
 
 yarn typeorm migration:create -m create-users     
 yarn typeorm migration:run
-yarn add type-graphql graphql dataloader @nestjs/graphql apollo-server-express
+yarn add type-graphql graphql dataloader @nestjs/graphql apollo-server-express class-validator
 
 
 mkdir -p src/resolvers/input
+
